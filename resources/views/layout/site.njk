@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="{{ mix('/assets/css/bulma.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ mix('/assets/css/font-awesome.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ mix('/assets/css/main.css') }}" />
+
+    <title>{{ page_title }} - ITSA Quiz</title>
+  </head>
+  <body>
+    <div id="app">
+      {% block content %}{% endblock %}
+    </div>
+
+    {% block footer %}{% endblock %}
+
+    <script>
+      var APP_ID = '{{ config('service.facebook.app_id') }}';
+    </script>
+
+    <script src="{{ mix('/assets/js/manifest.js') }}"></script>
+    <script src="{{ mix('/assets/js/vendor.js') }}"></script>
+    <script src="{{ mix('/assets/js/app.js') }}"></script>
+
+    <script>
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+  </body>
+</html>
