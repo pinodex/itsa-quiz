@@ -1,0 +1,60 @@
+{
+  "name": "itsaq",
+  "private": true,
+  "version": "0.1.0",
+  "description": "ITSA Q&A Application",
+  "author": "Raphael Marco <raphaelmarco@outlook.com>",
+  "license": "MIT",
+  "main": "server.js",
+  "scripts": {
+    "mix:dev": "npm run mix:development",
+    "mix:development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "mix:watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "mix:watch-poll": "npm run mix:watch -- --watch-poll",
+    "mix:hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "mix:prod": "npm run mix:production",
+    "mix:production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "serve:dev": "nodemon --watch app --watch bootstrap --watch config --watch .env -x node server.js",
+    "serve": "node server.js",
+    "lint": "standard"
+  },
+  "dependencies": {
+    "adonis-ace": "^3.0.7",
+    "adonis-auth": "^1.0.5",
+    "adonis-commands": "^2.1.5",
+    "adonis-fold": "^3.0.3",
+    "adonis-framework": "^3.0.10",
+    "adonis-lucid": "^3.0.14",
+    "adonis-middleware": "^1.0.11",
+    "adonis-websocket": "^1.0.3",
+    "co": "^4.6.0",
+    "fb": "^2.0.0",
+    "js-beautify": "1.6.14",
+    "mysql": "^2.14.1",
+    "promise.prototype.finally": "^3.0.1",
+    "youch": "^2.0.4"
+  },
+  "devDependencies": {
+    "adonis-websocket-client": "^1.0.2",
+    "axios": "^0.16.2",
+    "buefy": "^0.5.2",
+    "bulma": "^0.5.2",
+    "cross-env": "^5.0.5",
+    "font-awesome": "^4.7.0",
+    "laravel-mix": "^1.4.3",
+    "node-sass": "^4.5.3",
+    "nodemon": "^1.12.1",
+    "standard": "^10.0.3",
+    "vue": "^2.4.4",
+    "vuex": "^2.4.0"
+  },
+  "standard": {
+    "global": [
+      "use",
+      "make"
+    ]
+  },
+  "autoload": {
+    "App": "./app"
+  }
+}
