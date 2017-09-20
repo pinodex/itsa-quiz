@@ -1,5 +1,5 @@
-import Game from './Game'
+import App from './App'
 
 export default {
-  Game
+  App
 }

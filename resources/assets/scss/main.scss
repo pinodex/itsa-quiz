@@ -1,24 +1,39 @@
+html.index {
+  overflow: hidden !important;
+}
+
 .header {
   position: relative;
 
   &.is-fh {
     .hero {
       height: 100vh;
+
+      .hero-body {
+        display: flex;
+        align-items: center;
+      }
     }
   }
 
   .hero {
+    position: relative;
+
     height: 40vh;
-    transition: height 0.5s ease;
+    transition: all 0.5s ease;
 
     .hero-body {
-      display: flex;
-      align-items: center;
       padding-top: 0;
     }
 
     .hero-footer {
       padding: 1rem;
+    }
+
+    &.is-transparent {
+      &, .title, .subtitle {
+        color: #fff;
+      }
     }
   }
 
