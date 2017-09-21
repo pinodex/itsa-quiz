@@ -50,6 +50,8 @@
     },
 
     mounted () {
+      setTimeout(() => this.$root.setThemeColor('#d39144'), 500)
+
       this.client.on('cloud:spawn', cloud => {
         this.spawnCloud(cloud)
       })

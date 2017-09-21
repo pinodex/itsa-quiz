@@ -29,6 +29,8 @@
     },
 
     mounted () {
+      this.$root.setThemeColor('#ff0561')
+
       this.$root.$on('fb:init', () => {
         FB.getLoginStatus(f => {
           if (f.status === 'connected') {

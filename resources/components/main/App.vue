@@ -86,12 +86,6 @@
       }
     },
 
-    data () {
-      return {
-
-      }
-    },
-
     methods: {
       logout () {
         this.$dialog.confirm({

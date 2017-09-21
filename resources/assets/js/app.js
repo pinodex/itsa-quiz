@@ -39,12 +39,22 @@ const app = new Vue({
 
   mounted () {
     this.$on('store:LOGOUT', () => {
+      this.$root.setThemeColor('#ff0561')
+
       FB.getLoginStatus(f => {
         if (f.status === 'connected') {
           FB.logout()
         }
       })
     })
+  },
+
+  methods: {
+    setThemeColor (color) {
+      let el = document.querySelector('meta[name="theme-color"]')
+
+      el.setAttribute('content', color)
+    }
   }
 })
 
