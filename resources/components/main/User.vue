@@ -9,7 +9,7 @@
 
       <div class="column has-text-centered">
         <div class="user">
-          <figure class="image is-128x128 avatar">
+          <figure class="image avatar">
             <img :src="'//graph.facebook.com/' + user.fbid + '/picture?height=256&amp;width=256'">
           </figure>
 
@@ -32,8 +32,13 @@
 </template>
 
 <style lang="scss">
+  $small-breakpoint: 400px;
+
   .user {
     .avatar {
+      height: 128px;
+      width: 128px;
+
       border-radius: 100%;
       overflow: hidden;
 
@@ -41,15 +46,32 @@
       background: #fff;
 
       margin: 0 auto;
+
+      @media (max-width: $small-breakpoint) {
+        height: 64px;
+        width: 64px;
+      }
     }
 
     .name {
       margin-top: 1rem;
+
+      @media (max-width: $small-breakpoint) {
+        display: none;
+      }
     }
   }
 
   .stat {
     margin-top: 2rem;
+
+    @media (max-width: $small-breakpoint) {
+      margin-top: 0.75rem;
+
+      .title {
+        font-size: 1.5rem;
+      }
+    }
   }
 </style>
 

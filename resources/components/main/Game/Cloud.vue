@@ -7,6 +7,8 @@
 </template>
 
 <style lang="scss">
+  $small-breakpoint: 400px;
+
   .cloud {
     position: absolute;
 
@@ -28,6 +30,20 @@
 
     &.is-large {
       font-size: 7rem;
+    }
+
+    @media (max-width: $small-breakpoint) {
+      &.is-small {
+        font-size: 2rem;
+      }
+
+      &.is-medium {
+        font-size: 4rem;
+      }
+
+      &.is-large {
+        font-size: 6rem;
+      }
     }
   }
 </style>
