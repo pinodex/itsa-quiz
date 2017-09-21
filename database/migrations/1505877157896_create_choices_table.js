@@ -7,7 +7,7 @@ class ChoicesTableSchema extends Schema {
   up () {
     this.create('choices', (table) => {
       table.uuid('id').primary()
-      table.integer('question_id')
+      table.uuid('question_id').notNullable()
       table.string('text')
       table.boolean('is_answer')
     })
