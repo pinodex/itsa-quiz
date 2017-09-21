@@ -98,5 +98,21 @@ Route.group('admin.questions', () => {
     .route(':id/delete', ['GET', 'POST'], 'Admin/QuestionController.delete')
     .as('admin.questions.delete')
 
+  Route
+    .get('/:id/choices', 'Admin/QuestionChoiceController.index')
+    .as('admin.questions.choices')
+
+  Route
+    .route('/:id/choices/add', ['GET', 'POST'], 'Admin/QuestionChoiceController.edit')
+    .as('admin.questions.choices.add')
+
+  Route
+    .route('/:id/choices/:choice_id/edit', ['GET', 'POST'], 'Admin/QuestionChoiceController.edit')
+    .as('admin.questions.choices.edit')
+
+  Route
+    .route('/:id/choices/:choice_id/delete', ['GET', 'POST'], 'Admin/QuestionChoiceController.delete')
+    .as('admin.questions.choices.delete')
+
 }).prefix('admin/questions')
   .middleware('auth:account')

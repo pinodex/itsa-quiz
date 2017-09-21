@@ -1,20 +1,14 @@
-{% extends '../../layout/admin_logged_in' %}
+{% extends '../../../layout/admin_logged_in' %}
 
-{% set page_title = 'Add Question' %}
+{% set page_title = 'Add Choice' %}
 {% set active_menu = 'questions' %}
 
-{% set formUrl = url('admin.questions.add') %}
+{% set formUrl = url('admin.questions.choices.add', { id: question.id }) %}
 
 {% if model.id %}
-  {% set page_title = 'Edit Question' %}
-  {% set formUrl = url('admin.questions.edit', { id: model.id }) %}
+  {% set page_title = 'Edit Choice' %}
+  {% set formUrl = url('admin.questions.choices.edit', { id: question.id, choice_id: model.id }) %}
 {% endif %}
-
-{% set difficulties = [
-    { text: 'Easy', value: 1 },
-    { text: 'Medium', value: 2 },
-    { text: 'Hard', value: 3 }
-] %}
 
 {% block subcontent %}
   <section class="hero is-light has-contents-below">
@@ -22,9 +16,9 @@
       <div class="level">
         <div class="level-left">
           {% if model.id %}
-            <h1 class="title">Edit Question</h1>
+            <h1 class="title">Edit Choice</h1>
           {% else %}
-            <h1 class="title">Add Question</h1>
+            <h1 class="title">Add Choice</h1>
           {% endif %}
         </div>
 
@@ -49,26 +43,26 @@
             {{ csrfField }}
 
             <div class="field">
-              <label class="label">Difficulty</label>
+              <label class="label">Text</label>
               <div class="control">
-                <div class="select is-fullwidth">
-                  <select name="difficulty">
-                    {% for difficulty in difficulties %}
-                      {% if difficulty.value == old('difficulty', model.difficulty) %}
-                        <option value="{{ difficulty.value }}" selected>{{ difficulty.text }}</option>
-                      {% else %}
-                        <option value="{{ difficulty.value }}">{{ difficulty.text }}</option>
-                      {% endif %}
-                    {% endfor %}
-                  </select>
-                </div>
+                <textarea class="textarea" name="text">{{ old('text', model.text) }}</textarea>
               </div>
             </div>
 
             <div class="field">
-              <label class="label">Text</label>
+              <label class="label">Is answer</label>
               <div class="control">
-                <textarea class="textarea" name="text">{{ old('text', model.text) }}</textarea>
+                <div class="select is-fullwidth">
+                  <select name="is_answer">
+                    {% if old('is_answer', model.is_answer) == '1' %}
+                      <option value="1" selected>Yes</option>
+                      <option value="0">No</option>
+                    {% else %}
+                      <option value="1">Yes</option>
+                      <option value="0" selected>No</option>
+                    {% endif %}
+                  </select>
+                </div>
               </div>
             </div>
 

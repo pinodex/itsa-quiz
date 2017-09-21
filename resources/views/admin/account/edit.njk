@@ -7,7 +7,7 @@
 
 {% if model.id %}
   {% set page_title = 'Edit Account' %}
-    {% set formUrl = url('admin.accounts.edit', { id: model.id }) %}
+  {% set formUrl = url('admin.accounts.edit', { id: model.id }) %}
 {% endif %}
 
 {% block subcontent %}

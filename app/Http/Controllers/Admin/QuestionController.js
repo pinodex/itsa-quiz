@@ -1,11 +1,12 @@
 'use strict'
 
-const Question = use('App/Model/Question')
-const Validator = use('Validator')
+const Validator = use('Validator'),
+      Question = use('App/Model/Question')
 
 class QuestionController {
+
   * index (request, response) {
-    const questions = yield Question.all()
+    let questions = yield Question.all()
 
     yield response.sendView('admin/question/index', {
       result: questions
@@ -13,8 +14,8 @@ class QuestionController {
   }
 
   * edit (request, response) {
-    const paramId = request.param('id')
-    let model = new Question()
+    let paramId = request.param('id'),
+        model = new Question()
 
     if (paramId) {
       model = yield Question.find(paramId)
@@ -29,11 +30,9 @@ class QuestionController {
     }
 
     if (request.method() == 'POST') {
-      const data = request.only([
-        'difficulty', 'text'
-      ])
+      let data = request.only(['difficulty', 'text'])
 
-      const validation = yield Validator.validate(data,
+      let validation = yield Validator.validate(data,
         Question.rules(model.id), Question.validationMessages
       )
 
@@ -65,7 +64,7 @@ class QuestionController {
   }
 
   * delete (request, response) {
-    const model = yield Question.find(request.param('id'))
+    let model = yield Question.find(request.param('id'))
 
     if (model == null) {
       yield request.with({ error: 'Cannot find requested question' }).flash()
@@ -76,7 +75,9 @@ class QuestionController {
     }
 
     if (request.method() == 'POST') {
+      yield model.choices().delete()
       yield model.delete()
+
       yield request.with({ success: `Question has been deleted` }).flash()
 
       response.route('admin.questions')
@@ -86,6 +87,7 @@ class QuestionController {
 
     yield response.sendView('admin/question/delete', { model })
   }
+
 }
 
 module.exports = QuestionController

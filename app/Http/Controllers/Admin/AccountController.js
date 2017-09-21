@@ -1,11 +1,12 @@
 'use strict'
 
-const Account = use('App/Model/Account')
-const Validator = use('Validator')
+const Validator = use('Validator'),
+      Account = use('App/Model/Account')
 
 class AccountController {
+
   * index (request, response) {
-    const accounts = yield Account.all()
+    let accounts = yield Account.all()
 
     yield response.sendView('admin/account/index', {
       result: accounts
@@ -13,8 +14,8 @@ class AccountController {
   }
 
   * edit (request, response) {
-    const paramId = request.param('id')
-    let model = new Account()
+    let paramId = request.param('id'),
+        model = new Account()
 
     if (paramId) {
       model = yield Account.find(paramId)
@@ -29,11 +30,11 @@ class AccountController {
     }
 
     if (request.method() == 'POST') {
-      const data = request.only([
+      let data = request.only([
         'name', 'username', 'password', 'password_confirm',
       ])
 
-      const validation = yield Validator.validate(data,
+      let validation = yield Validator.validate(data,
         Account.rules(model.id), Account.validationMessages
       )
 
@@ -71,7 +72,7 @@ class AccountController {
   }
 
   * delete (request, response) {
-    const model = yield Account.find(request.param('id'))
+    let model = yield Account.find(request.param('id'))
 
     if (model == null) {
       yield request.with({ error: 'Cannot find requested account' }).flash()
@@ -92,6 +93,7 @@ class AccountController {
 
     yield response.sendView('admin/account/delete', { model })
   }
+
 }
 
 module.exports = AccountController

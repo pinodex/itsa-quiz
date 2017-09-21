@@ -9,6 +9,7 @@ class ChoicesTableSchema extends Schema {
       table.uuid('id').primary()
       table.integer('question_id')
       table.string('text')
+      table.boolean('is_answer')
     })
   }
 
