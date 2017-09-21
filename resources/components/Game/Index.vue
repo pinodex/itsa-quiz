@@ -58,7 +58,9 @@
       })
 
       this.client.on('question', question => {
-        this._showQuestion(question)
+        this._showQuestion(question, choice => {
+          this._sendAnswer(question, choice)
+        })
       })
 
       const loop = () => {
@@ -132,10 +134,10 @@
         return this.clouds.findIndex(cloud => cloud.id == id)
       },
 
-      _showQuestion (model, onCancel = () => {}) {
-        this.$modal.open({
+      _showQuestion (model, onPick = () => {}, onCancel = () => {}) {
+        let modal = this.$modal.open({
           component: Question,
-          props: { model },
+          props: { model, onPick },
 
           canCancel: true,
 
@@ -143,14 +145,10 @@
         })
       },
 
-      _getRandomSize () {
-        const index = rng.integer(0, SIZES.length - 1)
-
-        return SIZES[index]
-      },
-
-      _toDifficulty (size) {
-        return SIZES.findIndex(s => s == size) + 1
+      _sendAnswer (question, choice) {
+        this.client.emit('question:answer', {
+          question: question.id, choice
+        })
       }
     }
   }

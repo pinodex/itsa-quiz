@@ -24,6 +24,8 @@ class Engine {
   * getQuestion (difficulty) {
     const question = yield this.question.getRandomOfDifficulty(difficulty)
 
+    question.expiry = 5 * difficulty
+
     return question
   }
 

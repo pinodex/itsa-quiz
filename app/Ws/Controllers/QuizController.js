@@ -29,9 +29,14 @@ class QuizController {
 
       return question
     }).then(question => {
-      this.socket.toMe().emit('cloud:pop', cloud.id)
       this.socket.toMe().emit('question', question)
+
+      this.socket.toMe().emit('cloud:pop', cloud.id)
     })
+  }
+
+  onQuestionAnswer (data) {
+    console.log(data)
   }
 
 }

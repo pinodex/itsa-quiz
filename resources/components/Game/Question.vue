@@ -1,19 +1,25 @@
 <template>
   <div class="card question">
     <div class="card-content">
-      <h2 class="subtitle">Question</h2>
+      <div class="level is-mobile">
+        <div class="level-left">
+          <h2 class="subtitle">Question</h2>
+        </div>
+
+        <div class="level-right">
+          <p class="is-size-4 has-text-danger" v-show="isTimed">{{ seconds }}</p>
+        </div>
+      </div>
 
       <div class="content">
         {{ model.text }}
       </div>
 
-      <hr />
-
       <ul class="choices">
-        <li>Test choice</li>
-        <li>Test choice</li>
-        <li>Test choice</li>
-        <li>Test choice</li>
+        <li @click="pick(1)">Test choice</li>
+        <li @click="pick(2)">Test choice</li>
+        <li @click="pick(3)">Test choice</li>
+        <li @click="pick(4)">Test choice</li>
       </ul>
     </div>
   </div>
@@ -43,11 +49,41 @@
 
 <script>
   export default {
-    props: ['model'],
+    props: ['model', 'onPick'],
+
+    mounted () {
+      if (this.isTimed) {
+        this.seconds = this.model.expiry
+
+        setInterval(() => this.seconds--, 1000)
+      }
+    },
 
     data () {
       return {
+        seconds: 0
+      }
+    },
 
+    methods: {
+      pick (id) {
+        this.$emit('close')
+
+        this.onPick(id)
+      }
+    },
+
+    computed: {
+      isTimed () {
+        return 'expiry' in this.model
+      }
+    },
+
+    watch: {
+      seconds (newValue, oldValue) {
+        if (newValue <= 0) {
+          this.$emit('close')
+        }
       }
     }
   }
