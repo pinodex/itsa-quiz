@@ -34,7 +34,7 @@
     </thead>
 
     <tbody>
-      {% for question in result.toJSON() %}
+      {% for question in result.value() %}
         <tr>
           <td class="has-text-centered">{{ question.difficulty }}</td>
           <td>{{ question.text }}</td>

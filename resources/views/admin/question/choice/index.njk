@@ -37,7 +37,7 @@
     </thead>
 
     <tbody>
-      {% for choice in result.toJSON() %}
+      {% for choice in result.value() %}
         <tr>
           <td>{{ choice.text }}</td>
           <td>

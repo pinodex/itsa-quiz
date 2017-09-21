@@ -34,7 +34,7 @@
     </thead>
 
     <tbody>
-      {% for account in result.toJSON() %}
+      {% for account in result.value() %}
         <tr>
           <td>{{ account.name }}</td>
           <td>{{ account.username }}</td>
