@@ -6,7 +6,7 @@ import Buefy from 'buefy'
 import axios from 'axios'
 import ws from 'adonis-websocket-client'
 
-import components from '../../components'
+import components from '../../components/main'
 import store from './store'
 
 require('promise.prototype.finally').shim()

@@ -37,3 +37,45 @@ Route.group('api.quiz', function () {
 
 }).prefix('api/quiz')
   .middleware('auth:user')
+
+/**
+ * Admin routes
+ */
+Route.group('admin', () => {
+
+  Route
+    .get('/', 'Admin/MainController.index')
+    .as('admin.index')
+    .middleware('auth:account')
+
+  Route
+    .route('login', ['GET', 'POST'], 'Admin/MainController.login')
+    .as('admin.login')
+
+  Route
+    .get('logout', 'Admin/MainController.logout')
+    .as('admin.logout')
+    .middleware('auth:account')
+
+}).prefix('admin')
+
+Route.group('admin.accounts', () => {
+
+  Route
+    .get('/', 'Admin/AccountController.index')
+    .as('admin.accounts')
+
+  Route
+    .route('add', ['GET', 'POST'], 'Admin/AccountController.edit')
+    .as('admin.accounts.add')
+
+  Route
+    .route(':id/edit', ['GET', 'POST'], 'Admin/AccountController.edit')
+    .as('admin.accounts.edit')
+
+  Route
+    .route(':id/delete', ['GET', 'POST'], 'Admin/AccountController.delete')
+    .as('admin.accounts.delete')
+
+}).prefix('admin/accounts')
+  .middleware('auth:account')

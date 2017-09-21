@@ -26,6 +26,12 @@ Http.handleError = function * (error, request, response) {
     return
   }
 
+  if (error.name === 'InvalidLoginException') {
+    response.route('admin.login')
+
+    return
+  }
+
   /**
    * PRODUCTION REPORTER
    */
@@ -41,6 +47,7 @@ Http.onStart = function () {
   const path = require('path'),
         Helpers = use('Helpers'),
         Config = use('Config'),
+        Route = use('Route'),
         View = use('View')
 
   View.global('mix', text => {
@@ -51,6 +58,12 @@ Http.onStart = function () {
     const manifest = require(path.join(Helpers.publicPath(), 'mix-manifest.json'))
 
     return manifest[text]
+  })
+
+  View.global('url', (route, data) => {
+    data = data || {}
+
+    return Route.url(route, data)
   })
 
   View.global('config', (key, defaultValue) => {

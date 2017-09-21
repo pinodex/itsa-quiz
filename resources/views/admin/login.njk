@@ -1,0 +1,59 @@
+{% extends '../layout/admin' %}
+
+{% set page_title = 'Login' %}
+
+{% set error = old('error') %}
+
+{% block content %}
+  <section class="hero is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-4 is-offset-4">
+            <h1 class="title">Login</h1>
+
+            {% if error %}
+              <div class="notification is-danger">
+                <small>{{ error }}</small>
+              </div>
+            {% endif %}
+
+            <form action="{{ url('admin.login') }}" method="post">
+              {{ csrfField }}
+
+              <div class="field">
+                <label class="label">Username</label>
+                <div class="control has-icons-left">
+                  <input class="input" type="text" name="username" />
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Password</label>
+                <div class="control has-icons-left">
+                  <input class="input" type="password" name="password" />
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-key"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field is-clearfix">
+                <button class="button is-pulled-right">
+                  <span class="icon is-small">
+                    <i class="fa fa-sign-in"></i>
+                  </span>
+
+                  <span>Login</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

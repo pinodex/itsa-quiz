@@ -1,0 +1,102 @@
+{% extends './admin' %}
+
+{% set success = old('success') %}
+{% set error = old('error') %}
+
+{%
+
+set menu = [
+  {
+    icon: 'home',
+    identifier: 'home',
+    route: 'admin.index',
+    name: 'Home'
+  },
+
+  {
+    icon: 'vcard',
+    identifier: 'accounts',
+    route: 'admin.accounts',
+    name: 'Accounts'
+  }
+]
+
+%}
+
+{% block content %}
+  <nav class="nav has-shadow is-fixed-top">
+    <div class="container is-fluid">
+      <div class="nav-left">
+        <button class="nav-item toggle-menu-button" @click="toggleSideBar()">
+          <transition name="fade">
+            <i class="fa fa-bars" v-show="!ui.nav.sideBarActive"></i>
+          </transition>
+
+          <transition name="slide-fade" :duration="{ enter: 1000, leave: 0 }">
+            <i class="fa fa-chevron-left" v-show="ui.nav.sideBarActive"></i>
+          </transition>
+        </button>
+
+        <a href="{{ url('admin.index') }}" class="nav-item">
+          <span class="is-hidden-mobile">ITSA Quiz</span>
+        </a>
+      </div>
+
+      <div class="nav-right is-flex-mobile">
+        <div class="nav-item is-tab">
+          <span>{{ currentUser.name }}</span>
+        </div>
+
+        <a href="{{ url('admin.logout') }}" class="nav-item is-tab" title="Logout">
+          <span class="icon">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+          </span>
+
+          <span class="is-hidden-mobile">Log out</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="off-menu is-always-active" :class="{ active: ui.nav.sideBarActive }">
+    <aside class="menu sidebar">
+      <ul class="menu-list">
+        {% for item in menu %}
+            {% if active_menu == item.identifier %}
+              <li class="is-active" title="{{ item.name }}">
+                <a href="{{ url(item.route) }}">
+                  <span class="icon">
+                    <i class="fa fa-{{ item.icon }}"></i>
+                  </span>
+
+                  <span class="text">{{ item.name }}</span>
+                </a>
+              </li>
+            {% else %}
+              <li title="{{ item.name }}">
+                <a href="{{ url(item.route) }}">
+                  <span class="icon">
+                    <i class="fa fa-{{ item.icon }}"></i>
+                  </span>
+
+                  <span class="text">{{ item.name }}</span>
+                </a>
+              </li>
+            {% endif %}
+        {% endfor %}
+      </ul>
+    </aside>
+
+    <div class="main-container" @click="closeOverlays()">
+      {% if error %}
+        <div class="notification is-danger is-marginless is-flat">{{ error }}</div>
+      {% endif %}
+
+      {% if success %}
+        <div class="notification is-success is-marginless is-flat">{{ success }}</div>
+      {% endif %}
+
+      {% block subcontent %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}

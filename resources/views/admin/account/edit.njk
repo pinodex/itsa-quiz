@@ -1,0 +1,109 @@
+{% extends '../../layout/admin_logged_in' %}
+
+{% set page_title = 'Add Account' %}
+{% set active_menu = 'accounts' %}
+
+{% set formUrl = url('admin.accounts.add') %}
+
+{% if model.id %}
+  {% set page_title = 'Edit Account' %}
+    {% set formUrl = url('admin.accounts.edit', { id: model.id }) %}
+{% endif %}
+
+{% block subcontent %}
+  <section class="hero is-light has-contents-below">
+    <div class="hero-body">
+      <div class="level">
+        <div class="level-left">
+          {% if model.id %}
+            <h1 class="title">Edit Account</h1>
+          {% else %}
+            <h1 class="title">Add Account</h1>
+          {% endif %}
+        </div>
+
+        <div class="level-right"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="columns">
+      <div class="column is-4 is-offset-4">
+        <div class="box">
+          {% if old('errors') %}
+            {% for error in old('errors') %}
+              <div class="notification is-danger">
+                <small>{{ error.message | capitalize }}</small>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <form class="form" action="{{ formUrl }}" method="post">
+            {{ csrfField }}
+
+            <div class="field">
+              <label class="label">Name</label>
+              <div class="control">
+                <input class="input" type="text" name="name" value="{{ old('name', model.name) }}" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Username</label>
+              <div class="control">
+                <input class="input" type="text" name="username" value="{{ old('username', model.username) }}" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">
+                Password
+
+                {% if model.id %}
+                  <small>(Leave blank if not changing)</small>
+                {% endif %}
+              </label>
+              <div class="control">
+                {% if model.id %}
+                  <input class="input" type="password" name="password" />
+                {% else %}
+                  <input class="input" type="password" name="password" required />
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">
+                Confirm Password
+
+                {% if model.id %}
+                  <small>(Leave blank if not changing)</small>
+                {% endif %}
+              </label>
+              <div class="control">
+                {% if model.id %}
+                  <input class="input" type="password" name="password_confirm" />
+                {% else %}
+                  <input class="input" type="password" name="password_confirm" required />
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="field">
+              <p class="control is-clearfix">
+                <button class="button is-primary is-pulled-right">
+                  <span class="icon is-small">
+                    <i class="fa fa-save"></i>
+                  </span>
+
+                  <span>Save</span>
+                </button>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

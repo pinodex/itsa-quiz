@@ -1,0 +1,89 @@
+{% extends './main' %}
+
+{% set success = old('success') %}
+{% set error = old('error') %}
+
+{% block content %}
+  <nav class="nav has-shadow is-fixed-top">
+    <div class="container is-fluid">
+      <div class="nav-left">
+        <button class="nav-item toggle-menu-button" @click="toggleSideBar()">
+          <transition name="fade">
+            <i class="fa fa-bars" v-show="!ui.nav.sideBarActive"></i>
+          </transition>
+
+          <transition name="slide-fade" :duration="{ enter: 1000, leave: 0 }">
+            <i class="fa fa-chevron-left" v-show="ui.nav.sideBarActive"></i>
+          </transition>
+        </button>
+
+        <a href="{{ url('dashboard.index') }}" class="nav-item has-logo">
+          <img src="/assets/img/logo-transparent.png" alt="Logo">
+            <span class="is-hidden-mobile">Mr. and Ms. STI 2017</span>
+        </a>
+      </div>
+
+      <div class="nav-right is-flex-mobile">
+        <div class="nav-item is-tab">
+          <span>{{ currentUser.name }}</span>
+        </div>
+
+        <a href="{{ url('dashboard.logout') }}" class="nav-item is-tab" title="Logout">
+          <span class="icon">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+          </span>
+
+          <span class="is-hidden-mobile">Log out</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="off-menu is-always-active" :class="{ active: ui.nav.sideBarActive }">
+    <aside class="menu sidebar">
+      {% for item in config('menu') %}
+        {% if item.header != null %}
+          <p class="menu-label">{{ item.header }}</p>
+        {% endif %}
+
+        <ul class="menu-list">
+          {% for listItem in item.list %}
+            {% if active_menu == listItem.identifier %}
+              <li class="is-active" title="{{ listItem.name }}">
+                <a href="{{ route(listItem.route) }}">
+                  <span class="icon">
+                    <i class="fa fa-{{ listItem.icon }}"></i>
+                  </span>
+
+                  <span class="text">{{ listItem.name }}</span>
+                </a>
+              </li>
+            {% else %}
+              <li title="{{ listItem.name }}">
+                <a href="{{ route(listItem.route) }}">
+                  <span class="icon">
+                    <i class="fa fa-{{ listItem.icon }}"></i>
+                  </span>
+
+                  <span class="text">{{ listItem.name }}</span>
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endfor %}
+    </aside>
+
+    <div class="main-container" @click="closeOverlays()">
+      {% if error %}
+        <div class="notification is-danger is-marginless is-flat">{{ error }}</div>
+      {% endif %}
+
+      {% if success %}
+        <div class="notification is-success is-marginless is-flat">{{ success }}</div>
+      {% endif %}
+
+      {% block subcontent %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}
