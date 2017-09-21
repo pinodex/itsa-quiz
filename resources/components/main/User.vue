@@ -76,8 +76,9 @@
 </style>
 
 <script>
+  const SOCKET_NAMESPACE = 'user'
+
   export default {
-    client: null,
     props: ['model'],
 
     data () {
@@ -93,7 +94,7 @@
     },
 
     beforeCreate () {
-      this.client = this.$io.channel('user')
+      this.client = this.$io.channel(SOCKET_NAMESPACE)
     },
 
     created () {
@@ -118,6 +119,8 @@
       this.client.off('update')
 
       this.client.disconnect()
+
+      delete this.$io._channelsPool[SOCKET_NAMESPACE]
     }
   }
 </script>

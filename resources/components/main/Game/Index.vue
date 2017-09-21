@@ -22,8 +22,9 @@
   import Cloud from './Cloud'
   import Question from './Question'
 
+  const SOCKET_NAMESPACE = 'game'
+
   export default {
-    client: null,
     components: { Cloud },
 
     data () {
@@ -33,7 +34,7 @@
     },
 
     beforeCreate () {
-      this.client = this.$io.channel('game')
+      this.client = this.$io.channel(SOCKET_NAMESPACE)
     },
 
     created () {
@@ -87,6 +88,8 @@
       this.client.off('question')
 
       this.client.disconnect()
+
+      delete this.$io._channelsPool[SOCKET_NAMESPACE]
     },
 
     methods: {
