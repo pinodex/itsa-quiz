@@ -1,5 +1,7 @@
-const Sky = use('App/Components/Game/Sky'),
-      Question = use('App/Components/Game/Question')
+const shuffle = require('knuth-shuffle').knuthShuffle,
+      Sky = use('App/Components/Game/Sky'),
+      Question = use('App/Components/Game/Question'),
+      Answer = use('App/Model/Answer')
 
 class Engine {
 
@@ -22,11 +24,42 @@ class Engine {
   }
 
   * getQuestion (difficulty) {
-    const question = yield this.question.getRandomOfDifficulty(difficulty)
+    let output = {},
+        question = yield this.question.getRandomOfDifficulty(difficulty)
 
-    question.expiry = 5 * difficulty
+    output = question.toJSON()
 
-    return question
+    shuffle(output.choices)
+
+    output.expiry = 5 * difficulty
+
+    return output
+  }
+
+  * answer (user, question_id, choice_id) {
+    let question = yield this.question.getById(question_id)
+
+    if (!question) {
+      return
+    }
+
+    let choice = yield question.choices().where('id', choice_id).first()
+
+    if (!choice) {
+      return
+    }
+
+    let answer = new Answer()
+
+    answer.user_id = user.id
+    answer.question_id = question.id
+    answer.choice_id = choice.id
+
+    yield answer.save()
+
+    yield user.computeScore()
+
+    this.event.fire('user:update', user)
   }
 
   _loop () {

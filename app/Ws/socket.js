@@ -16,5 +16,8 @@
 
 const Ws = use('Ws')
 
-Ws.channel('quiz', 'QuizController')
+Ws.channel('user', 'UserController')
+  .middleware('auth:user')
+
+Ws.channel('game', 'GameController')
   .middleware('auth:user')

@@ -33,7 +33,7 @@
     },
 
     beforeCreate () {
-      this.client = this.$io.channel('quiz')
+      this.client = this.$io.channel('game')
     },
 
     created () {
@@ -81,8 +81,10 @@
       loop()
     },
 
-    destroyed () {
+    beforeDestroy () {
       this.client.off('cloud:spawn')
+      this.client.off('cloud:pop')
+      this.client.off('question')
 
       this.client.disconnect()
     },

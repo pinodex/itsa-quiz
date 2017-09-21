@@ -10,6 +10,10 @@ class Choice extends Lucid {
     this.addHook('beforeCreate', 'Uuid.setId')
   }
 
+  static get hidden () {
+    return ['question_id', 'is_answer']
+  }
+
   static get createTimestamp () {
     return null
   }

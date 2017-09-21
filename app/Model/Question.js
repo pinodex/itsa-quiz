@@ -10,10 +10,6 @@ class Question extends Lucid {
     this.addHook('beforeCreate', 'Uuid.setId')
   }
 
-  static get hidden () {
-    return ['choice_id']
-  }
-
   choices () {
     return this.hasMany('App/Model/Choice')
   }

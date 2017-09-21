@@ -16,10 +16,7 @@
       </div>
 
       <ul class="choices">
-        <li @click="pick(1)">Test choice</li>
-        <li @click="pick(2)">Test choice</li>
-        <li @click="pick(3)">Test choice</li>
-        <li @click="pick(4)">Test choice</li>
+        <li v-for="choice in model.choices" @click="pick(choice.id)">{{ choice.text }}</li>
       </ul>
     </div>
   </div>

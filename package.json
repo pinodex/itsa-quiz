@@ -31,6 +31,7 @@
     "co": "^4.6.0",
     "fb": "^2.0.0",
     "js-beautify": "1.6.14",
+    "knuth-shuffle": "^1.0.1",
     "mysql": "^2.14.1",
     "promise.prototype.finally": "^3.0.1",
     "random-js": "^1.0.8",

@@ -9,6 +9,9 @@ class UsersTableSchema extends Schema {
       table.uuid('id').primary()
       table.string('fbid').notNullable()
       table.string('name').notNullable()
+      table.integer('score').notNullable()
+      table.integer('correct_count').notNullable()
+      table.integer('incorrect_count').notNullable()
       table.timestamps()
     })
   }

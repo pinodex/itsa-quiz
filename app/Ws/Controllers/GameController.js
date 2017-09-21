@@ -4,7 +4,7 @@ const Event = use('Event'),
       Engine = use('App/Addons/Game'),
       co = require('co')
 
-class QuizController {
+class GameController {
 
   constructor (socket, request) {
     this.socket = socket
@@ -36,9 +36,17 @@ class QuizController {
   }
 
   onQuestionAnswer (data) {
-    console.log(data)
+    if (!('question' in data) || !('choice' in data)) {
+      return
+    }
+
+    let user = this.socket.authUser
+
+    co(function * () {
+      yield Engine.answer(user, data.question, data.choice)
+    })
   }
 
 }
 
-module.exports = QuizController
+module.exports = GameController
