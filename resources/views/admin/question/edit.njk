@@ -1,0 +1,91 @@
+{% extends '../../layout/admin_logged_in' %}
+
+{% set page_title = 'Add Question' %}
+{% set active_menu = 'questions' %}
+
+{% set formUrl = url('admin.questions.add') %}
+
+{% if model.id %}
+  {% set page_title = 'Edit Question' %}
+    {% set formUrl = url('admin.questions.edit', { id: model.id }) %}
+{% endif %}
+
+{% set difficulties = [
+    { text: 'Easy', value: 1 },
+    { text: 'Medium', value: 2 },
+    { text: 'Hard', value: 3 }
+] %}
+
+{% block subcontent %}
+  <section class="hero is-light has-contents-below">
+    <div class="hero-body">
+      <div class="level">
+        <div class="level-left">
+          {% if model.id %}
+            <h1 class="title">Edit Question</h1>
+          {% else %}
+            <h1 class="title">Add Question</h1>
+          {% endif %}
+        </div>
+
+        <div class="level-right"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="columns">
+      <div class="column is-4 is-offset-4">
+        <div class="box">
+          {% if old('errors') %}
+            {% for error in old('errors') %}
+              <div class="notification is-danger">
+                <small>{{ error.message | capitalize }}</small>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <form class="form" action="{{ formUrl }}" method="post">
+            {{ csrfField }}
+
+            <div class="field">
+              <label class="label">Difficulty</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select name="difficulty">
+                    {% for difficulty in difficulties %}
+                      {% if difficulty.value == old('difficulty', model.difficulty) %}
+                        <option value="{{ difficulty.value }}" selected>{{ difficulty.text }}</option>
+                      {% else %}
+                        <option value="{{ difficulty.value }}">{{ difficulty.text }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Text</label>
+              <div class="control">
+                <textarea class="textarea" name="text">{{ old('text', model.text) }}</textarea>
+              </div>
+            </div>
+
+            <div class="field">
+              <p class="control is-clearfix">
+                <button class="button is-primary is-pulled-right">
+                  <span class="icon is-small">
+                    <i class="fa fa-save"></i>
+                  </span>
+
+                  <span>Save</span>
+                </button>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

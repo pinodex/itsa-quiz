@@ -1,9 +1,9 @@
 {% extends '../../layout/admin_logged_in' %}
 
-{% set page_title = 'Delete Account' %}
-{% set active_menu = 'accounts' %}
+{% set page_title = 'Delete Question' %}
+{% set active_menu = 'questions' %}
 
-{% set formUrl = url('admin.accounts.delete', { id: model.id }) %}
+{% set formUrl = url('admin.questions.delete', { id: model.id }) %}
 
 {% block subcontent %}
   <section class="hero is-danger has-contents-below">
@@ -11,7 +11,7 @@
       <div class="container is-fluid">
         <div class="level">
           <div class="level-left">
-            <h1 class="title">Delete Account</h1>
+            <h1 class="title">Delete Question</h1>
           </div>
 
           <div class="level-right">
@@ -27,7 +27,7 @@
       <div class="column is-4 is-offset-4">
         <article class="message is-danger">
           <div class="message-header">
-            <p>Delete Account</p>
+            <p>Delete Question</p>
           </div>
 
           <div class="message-body">
@@ -35,14 +35,14 @@
               {{ csrfField }}
 
               <div class="has-contents-below">
-                <p>Are you sure you want to delete this account?</p>
+                <p>Are you sure you want to delete this question?</p>
                 <p><strong>{{ model.name }}</strong></p>
               </div>
 
               <div class="is-clearfix">
                 <div class="field is-grouped is-pulled-right">
                   <p class="control">
-                    <a href="{{ url('admin.accounts') }}" class="button is-light">
+                    <a href="{{ url('admin.questions') }}" class="button is-light">
                       <span>Cancel</span>
                     </a>
                   </p>

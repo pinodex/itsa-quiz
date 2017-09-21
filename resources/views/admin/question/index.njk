@@ -1,23 +1,23 @@
 {% extends '../../layout/admin_logged_in' %}
 
-{% set page_title = 'Accounts' %}
-{% set active_menu = 'accounts' %}
+{% set page_title = 'Questions' %}
+{% set active_menu = 'questions' %}
 
 {% block subcontent %}
   <section class="hero is-light">
     <div class="hero-body">
       <div class="level">
         <div class="level-left">
-          <h1 class="title">Accounts</h1>
+          <h1 class="title">Questions</h1>
         </div>
 
         <div class="level-right">
-          <a href="{{ url('admin.accounts.add') }}" class="button is-primary">
+          <a href="{{ url('admin.questions.add') }}" class="button is-primary">
             <span class="icon is-small">
               <i class="fa fa-plus"></i>
             </span>
 
-            <span>Add Account</span>
+            <span>Add Question</span>
           </a>
         </div>
       </div>
@@ -27,21 +27,21 @@
   <table class="table is-fullwidth">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Username</th>
+        <th class="is-fit">Difficulty</th>
+        <th>Text</th>
         <th class="is-fit">Actions</th>
       </tr>
     </thead>
 
     <tbody>
-      {% for account in result.toJSON() %}
+      {% for question in result.toJSON() %}
         <tr>
-          <td>{{ account.name }}</td>
-          <td>{{ account.username }}</td>
+          <td class="has-text-centered">{{ question.difficulty }}</td>
+          <td>{{ question.text }}</td>
           <td>
             <div class="field is-grouped">
               <p class="control">
-                <a href="{{ url('admin.accounts.edit', { id: account.id }) }}" class="button is-primary is-small is-inverted">
+                <a href="{{ url('admin.questions.edit', { id: question.id }) }}" class="button is-primary is-small is-inverted">
                   <span class="icon is-small">
                     <i class="fa fa-pencil"></i>
                   </span>
@@ -49,7 +49,7 @@
               </p>
 
               <p class="control">
-                <a href="{{ url('admin.accounts.delete', { id: account.id }) }}" class="button is-danger is-small is-inverted">
+                <a href="{{ url('admin.questions.delete', { id: question.id }) }}" class="button is-danger is-small is-inverted">
                   <span class="icon is-small">
                     <i class="fa fa-times"></i>
                   </span>

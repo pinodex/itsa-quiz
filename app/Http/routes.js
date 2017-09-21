@@ -79,3 +79,24 @@ Route.group('admin.accounts', () => {
 
 }).prefix('admin/accounts')
   .middleware('auth:account')
+
+Route.group('admin.questions', () => {
+
+  Route
+    .get('/', 'Admin/QuestionController.index')
+    .as('admin.questions')
+
+  Route
+    .route('add', ['GET', 'POST'], 'Admin/QuestionController.edit')
+    .as('admin.questions.add')
+
+  Route
+    .route(':id/edit', ['GET', 'POST'], 'Admin/QuestionController.edit')
+    .as('admin.questions.edit')
+
+  Route
+    .route(':id/delete', ['GET', 'POST'], 'Admin/QuestionController.delete')
+    .as('admin.questions.delete')
+
+}).prefix('admin/questions')
+  .middleware('auth:account')

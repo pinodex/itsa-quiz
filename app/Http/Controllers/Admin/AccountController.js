@@ -24,15 +24,13 @@ class AccountController {
       yield request.with({ error: 'Cannot find requested account' }).flash()
 
       response.route('admin.accounts')
+
       return
     }
 
     if (request.method() == 'POST') {
       const data = request.only([
-        'name',
-        'username',
-        'password',
-        'password_confirm',
+        'name', 'username', 'password', 'password_confirm',
       ])
 
       const validation = yield Validator.validate(data,
@@ -44,10 +42,12 @@ class AccountController {
 
         if (model.id) {
           response.route('admin.accounts.edit', { id: model.id })
+
           return
         }
 
         response.route('admin.accounts.add')
+
         return
       }
 
