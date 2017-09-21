@@ -7,27 +7,26 @@ module.exports = class Controller {
    * Login action
    */
   * login (request, response) {
-    const accessToken = request.input('token')
+    let accessToken = request.input('token')
 
     fb.options({ accessToken })
 
     fb.api('me', { fields: ['id', 'name', 'picture'] })
       .then(fbr => {
-        const fbid = fbr.id,
-              name = fbr.name
+        let fbid = fbr.id,
+            name = fbr.name
 
         co(function * () {
-          const props = { fbid, name },
-                user = yield User.findOrCreate({ fbid }, props)
-
-          user.fill(props)
-          yield user.save()
+          let props = { fbid, name },
+              user = yield User.findOrCreate({ fbid }, props)
 
           yield request.auth
             .authenticator('user')
             .loginViaId(user.id)
 
-          response.send(user)
+          let model = yield User.find(user.id)
+
+          response.send(model)
         })
       })
   }
