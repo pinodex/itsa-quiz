@@ -1,5 +1,9 @@
+'use strict'
+
+const Env = use('Env')
+
 module.exports = {
   facebook: {
-    app_id: '507857892878521'
+    app_id: Env.get('FACEBOOK_APP_ID')
   }
 }
