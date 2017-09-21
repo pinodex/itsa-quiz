@@ -13,6 +13,7 @@ mix
   .js('resources/assets/js/app.js', 'public/assets/js')
   .js('resources/assets/js/admin.js', 'public/assets/js')
 
+  .copy('resources/public', 'public')
   .copy('resources/assets/img', 'public/assets/img')
   .copy('node_modules/font-awesome/fonts', 'public/assets/fonts')
 
