@@ -52,7 +52,7 @@
 
 <style lang="scss">
   .app {
-    background: linear-gradient(to bottom, rgba(51,4,55,1) 0%,rgba(125,185,232,1) 100%);
+    background: linear-gradient(to bottom, #d39144 0%, #0072d0 100%);
 
     display: flex;
     flex-flow: column;
