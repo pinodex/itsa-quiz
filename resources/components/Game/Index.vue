@@ -3,12 +3,11 @@
     <cloud v-for="cloud in clouds"
       :key="cloud.id"
       :size="cloud.size"
-      :velocity="cloud.velocity"
-      :x="cloud.x"
-      :y="cloud.y"
+      :speed="cloud.speed"
+      :x="cloud.position_x"
+      :y="cloud.position_y"
       :selected="cloud.selected"
 
-      @end="popCloud(cloud.id)"
       @click="getQuestion(cloud.id)" />
   </section>
 </template>
@@ -20,50 +19,70 @@
 </style>
 
 <script>
-  import random from 'random-js'
   import Cloud from './Cloud'
   import Question from './Question'
 
-  const SIZES = ['small', 'medium', 'large'],
-        rng = random()
-
-  let cloudId = 1
-
   export default {
+    client: null,
     components: { Cloud },
 
     data () {
       return {
-        clouds: [],
-        minimumClouds: 20,
-        maximumClouds: 30
+        clouds: []
       }
+    },
+
+    beforeCreate () {
+      this.client = this.$io.channel('quiz')
     },
 
     created () {
-      for (var i = 0; i < this.minimumClouds; i++) {
-        this.spawnCloud()
-      }
+      this.client.connect((error, connected) => {
+        if (error) {
+          this.$snackbar.open({
+            message: error,
+            type: 'is-danger',
+            duration: 10000
+          })
+        }
+      })
     },
 
     mounted () {
+      this.client.on('cloud:spawn', cloud => {
+        this.spawnCloud(cloud)
+      })
+
+      this.client.on('cloud:pop', id => {
+        this.popCloud(id)
+      })
+
+      this.client.on('question', question => {
+        this._showQuestion(question)
+      })
+
       const loop = () => {
         for (var i = 0; i < this.clouds.length; i++) {
           if (!this.clouds[i].selected) {
-            this.clouds[i].x += this.clouds[i].velocity
+            this.clouds[i].position_x += this.clouds[i].speed
           }
 
-          if (this.clouds.length < this.minimumClouds &&
-              this.clouds.length < this.maximumClouds) {
-
-            this.spawnCloud()
+          if (this.clouds[i].position_x > 150) {
+            this.popCloud(this.clouds[i].id)
           }
         }
 
         requestAnimationFrame(loop)
       }
 
+      // Begin game loop
       loop()
+    },
+
+    destroyed () {
+      this.client.off('cloud:spawn')
+
+      this.client.disconnect()
     },
 
     methods: {
@@ -71,17 +90,14 @@
         this.clouds.splice(this._findCloudIndex(id), 1)
       },
 
-      spawnCloud () {
-        this.clouds.push({
-          id: cloudId,
-          selected: false,
-          size: this._getRandomSize(),
-          velocity: rng.real(0.1, 0.5),
-          y: rng.integer(0, 70),
-          x: -50
-        })
+      spawnCloud (cloud) {
+        if (this.clouds.length > 30) {
+          return
+        }
 
-        cloudId++
+        cloud.selected = false
+
+        this.clouds.push(cloud)
       },
 
       selectCloud (id) {
@@ -107,18 +123,9 @@
           return
         }
 
-        const cloud = this.selectCloud(id),
-              difficulty = this._toDifficulty(cloud.size)
+        const cloud = this.selectCloud(id)
 
-        this.$http.get('api/quiz/question', { params: { difficulty } })
-          .then(response => {
-            this.popCloud(id)
-
-            this._showQuestion(response.data)
-          })
-          .catch(error => {
-
-          })
+        this.client.emit('cloud:pop', cloud)
       },
 
       _findCloudIndex (id) {

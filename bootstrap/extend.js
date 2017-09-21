@@ -40,3 +40,10 @@ Ioc.bind('App/Addons/Facebook', app => {
 
   return fb
 })
+
+Ioc.singleton('App/Addons/Game', app => {
+  const Event = use('Event'),
+        Engine = use('App/Components/Game/Engine')
+
+  return new Engine(Event)
+})

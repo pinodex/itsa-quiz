@@ -15,3 +15,6 @@
 */
 
 const Ws = use('Ws')
+
+Ws.channel('quiz', 'QuizController')
+  .middleware('auth:user')

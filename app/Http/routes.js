@@ -27,6 +27,7 @@ Route.group('api', function () {
   Route.post('login', 'Api/AuthController.login')
 
   Route.post('logout', 'Api/AuthController.logout')
+    .middleware('auth:user')
 
 }).prefix('api')
 
@@ -35,3 +36,4 @@ Route.group('api.quiz', function () {
   Route.get('question', 'Api/QuizController.question')
 
 }).prefix('api/quiz')
+  .middleware('auth:user')

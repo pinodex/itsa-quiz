@@ -56,4 +56,7 @@ Http.onStart = function () {
   View.global('config', (key, defaultValue) => {
     return Config.get(key, defaultValue)
   })
+
+  // Start game engine
+  use('App/Addons/Game').start()
 }

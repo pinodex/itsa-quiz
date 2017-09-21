@@ -40,7 +40,7 @@
         required: true
       },
 
-      velocity: {
+      speed: {
         type: Number,
         required: true
       },
@@ -79,16 +79,9 @@
       },
 
       styleObject () {
-        let top = this.y,
-            left = this.x
-
-        if (top > 150 || left > 150) {
-          this.$emit('end')
-        }
-
         return {
-          top: `${top}%`,
-          left: `${left}%`,
+          top: `${this.y}%`,
+          left: `${this.x}%`,
         }
       }
     },

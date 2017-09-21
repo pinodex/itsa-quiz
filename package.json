@@ -33,6 +33,7 @@
     "mysql": "^2.14.1",
     "promise.prototype.finally": "^3.0.1",
     "random-js": "^1.0.8",
+    "uuid": "^3.1.0",
     "youch": "^2.0.4"
   },
   "devDependencies": {

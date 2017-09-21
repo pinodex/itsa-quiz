@@ -6,7 +6,7 @@ class UsersTableSchema extends Schema {
 
   up () {
     this.create('users', (table) => {
-      table.increments()
+      table.uuid('id').primary()
       table.string('fbid').notNullable()
       table.string('name').notNullable()
       table.timestamps()
