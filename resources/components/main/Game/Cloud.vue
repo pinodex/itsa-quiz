@@ -22,14 +22,17 @@
 
     &.is-small {
       font-size: 3rem;
+      z-index: 3;
     }
 
     &.is-medium {
       font-size: 5rem;
+      z-index: 2;
     }
 
     &.is-large {
       font-size: 7rem;
+      z-index: 1;
     }
 
     @media (max-width: $small-breakpoint) {

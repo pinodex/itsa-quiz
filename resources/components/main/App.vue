@@ -61,6 +61,7 @@
 
     .header {
       flex: 0 1 auto;
+      height: 100px;
     }
 
     .canvas {
