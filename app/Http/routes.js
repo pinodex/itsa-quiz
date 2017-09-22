@@ -35,6 +35,8 @@ Route.group('api.quiz', function () {
 
   Route.get('question', 'Api/QuizController.question')
 
+  Route.get('leaderboard', 'Api/QuizController.leaderboard')
+
 }).prefix('api/quiz')
   .middleware('auth:user')
 

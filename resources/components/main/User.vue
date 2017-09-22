@@ -1,34 +1,34 @@
 <template>
-    <div class="columns is-mobile">
-      <div class="column has-text-centered">
-        <div class="stat">
-          <p class="heading">Score</p>
-          <p class="title">{{ user.score }}</p>
-        </div>
-      </div>
-
-      <div class="column has-text-centered">
-        <div class="user">
-          <figure class="image avatar">
-            <img :src="'//graph.facebook.com/' + user.fbid + '/picture?height=256&amp;width=256'">
-          </figure>
-
-          <p class="name">{{ user.name }}</p>
-        </div>
-      </div>
-
-      <div class="column has-text-centered">
-        <div class="stat">
-          <p class="heading">
-            <i class="fa fa-thumbs-up"></i>
-            <span>/</span>
-            <i class="fa fa-thumbs-down"></i>
-          </p>
-
-          <p class="title">{{ rightWrong }}</p>
-        </div>
+  <div class="columns is-mobile">
+    <div class="column has-text-centered">
+      <div class="stat">
+        <p class="heading">Score</p>
+        <p class="title">{{ user.score }}</p>
       </div>
     </div>
+
+    <div class="column has-text-centered">
+      <div class="user">
+        <figure class="image avatar">
+          <img :src="'//graph.facebook.com/' + user.fbid + '/picture?height=256&amp;width=256'">
+        </figure>
+
+        <p class="name">{{ user.name }}</p>
+      </div>
+    </div>
+
+    <div class="column has-text-centered">
+      <div class="stat">
+        <p class="heading">
+          <i class="fa fa-thumbs-up"></i>
+          <span>/</span>
+          <i class="fa fa-thumbs-down"></i>
+        </p>
+
+        <p class="title">{{ rightWrong }}</p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss">

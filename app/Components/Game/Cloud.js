@@ -8,8 +8,8 @@ class Cloud {
 
     this.difficulty = rng.integer(1, 3)
 
-    this.position_x = -rng.integer(30, 50)
-    this.position_y = rng.integer(0, 80)
+    this.position_x = -30
+    this.position_y = rng.integer(20, 80)
   }
 
   get size () {

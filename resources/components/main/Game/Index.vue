@@ -12,12 +12,6 @@
   </section>
 </template>
 
-<style lang="scss">
-  section.canvas {
-
-  }
-</style>
-
 <script>
   import Cloud from './Cloud'
   import Question from './Question'

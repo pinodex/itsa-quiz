@@ -51,7 +51,7 @@ html.index {
 
     .navbar-brand {
       img {
-        max-height: initial;
+        max-height: 36px;
       }
     }
 
@@ -113,11 +113,25 @@ html.index {
   animation: animate-binary 10s linear infinite;
 }
 
+.media.is-vcentered {
+  align-items: center;
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s ease;
 }
 
 .fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.slide-leave-active,
+.slide-enter-active {
+  transition: all .5s ease;
+}
+
+.slide-enter, .slide-leave-to {
+  transform: translate(0, 100%);
   opacity: 0;
 }
 

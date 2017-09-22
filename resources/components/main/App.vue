@@ -14,17 +14,25 @@
               </div>
             </div>
 
-            <div class="navbar-menu is-active">
-              <div class="navbar-end">
-                <transition name="fade">
-                  <a class="navbar-item" @click.prevent="logout" v-show="user">
+            <transition name="fade">
+              <div class="navbar-menu is-active" v-if="user">
+                <div class="navbar-end">
+                  <a class="navbar-item"
+                    @click.prevent="toggleLeaderboard"
+                    :class="{ 'has-text-warning': leaderboardShow }">
+                    <span class="icon">
+                      <i class="fa fa-trophy"></i>
+                    </span>
+                  </a>
+
+                  <a class="navbar-item" @click.prevent="logout">
                     <span class="icon">
                       <i class="fa fa-sign-in"></i>
                     </span>
                   </a>
-                </transition>
+                </div>
               </div>
-            </div>
+            </transition>
           </nav>
         </div>
 
@@ -46,7 +54,13 @@
       </div>
     </section>
 
-    <game v-if="user" />
+    <section class="game-content" v-if="user">
+      <game v-if="user" />
+
+      <transition name="slide">
+        <leaderboard v-if="leaderboardShow" />
+      </transition>
+    </section>
   </div>
 </template>
 
@@ -61,13 +75,24 @@
 
     .header {
       flex: 0 1 auto;
-      height: 100px;
+      height: 52px;
     }
 
-    .canvas {
+    .game-content {
+      position: relative;
+
       flex: 1 1 auto;
       position: relative;
       overflow: hidden;
+
+      & > * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+      }
     }
   }
 </style>
@@ -76,18 +101,34 @@
   import Login from './Login'
   import User from './User'
 
+  import Leaderboard from './Leaderboard'
+
   import Game from './Game/Index'
 
   export default {
-    components: { Login, User, Game },
+    components: { Login, User, Game, Leaderboard },
+
+    data () {
+      return {
+        leaderboardShow: false
+      }
+    },
 
     computed: {
       user () {
         return this.$store.getters.user
+      },
+
+      mainContentShow () {
+        return !this.leaderboardShow
       }
     },
 
     methods: {
+      toggleLeaderboard () {
+        this.leaderboardShow = !this.leaderboardShow
+      },
+
       logout () {
         this.$dialog.confirm({
           message: 'Are you sure you want to logout?',

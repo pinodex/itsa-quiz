@@ -1,4 +1,5 @@
-const Question = use('App/Model/Question')
+const Question = use('App/Model/Question'),
+      User = use('App/Model/User')
 
 module.exports = class Controller {
   /**
@@ -11,6 +12,15 @@ module.exports = class Controller {
             .orderByRaw('RAND()')
             .first()
 
-    yield response.send(question)
+    response.send(question)
+  }
+
+  /**
+   * Leaderboard action
+   */
+  * leaderboard (request, response) {
+    let top = yield User.top(5)
+
+    response.send(top)
   }
 }

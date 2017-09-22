@@ -1,6 +1,7 @@
 'use strict'
 
-const Lucid = use('Lucid')
+const Lucid = use('Lucid'),
+      knex = require('knex')
 
 class User extends Lucid {
 
@@ -39,6 +40,16 @@ class User extends Lucid {
     yield this.save()
 
     return score
+  }
+
+  static * top (n = 5) {
+    let user = yield User.query()
+      .orderBy('score', 'DESC')
+      .orderBy('correct_count', 'DESC')
+      .orderBy('incorrect_count', 'ASC')
+      .fetch()
+
+    return user
   }
 
 }
