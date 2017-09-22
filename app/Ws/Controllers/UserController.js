@@ -9,7 +9,9 @@ class UserController {
     this.request = request
 
     Event.when('user:update', this.socket.id, user => {
-      this.socket.toMe().emit('update', user)
+      if (this.request.authUser.id == user.id) {
+        this.socket.toMe().emit('update', user)
+      }
     })
   }
 
