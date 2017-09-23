@@ -19,8 +19,32 @@ module.exports = class Controller {
    * Leaderboard action
    */
   * leaderboard (request, response) {
-    let top = yield User.top(5)
+    let output = {},
+        top = yield User.top(5)
 
-    response.send(top)
+    let rank = 0,
+        isOnTop = false
+
+    output = top.toJSON()
+
+    output.map(user => {
+      if (user.id == request.authUser.id) {
+        isOnTop = true
+      }
+
+      user.rank = ++rank
+
+      return user
+    })
+
+    if (!isOnTop) {
+      let user = request.authUser.toJSON()
+
+      user.rank = yield request.authUser.getRank()
+
+      output.push(user)
+    }
+
+    response.send(output)
   }
 }

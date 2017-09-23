@@ -24,16 +24,20 @@
       <hr />
 
       <transition-group name="fade">
-        <article class="media is-vcentered" :key="user.id" v-for="user in users">
+        <article class="media is-vcentered" :key="user.id" v-for="(user, i) in users">
           <figure class="media-left image avatar">
             <img :src="'//graph.facebook.com/' + user.fbid + '/picture?height=54&amp;width=54'" />
           </figure>
 
           <div class="media-content">
             <div class="content">
-              <p class=" name is-size-5 is-marginless">{{ user.name }}</p>
-              <p class="points">{{ user.score }} / {{ user.correct_count }} / {{ user.incorrect_count }}</p>
+              <p class=" name is-marginless">{{ user.name }}</p>
+              <p class="points is-size-7">{{ user.score }} / {{ user.correct_count }} / {{ user.incorrect_count }}</p>
             </div>
+          </div>
+
+          <div class="media-right">
+            <h2 class="subtitle has-text-grey-light">#{{ user.rank }}</h2>
           </div>
         </article>
       </transition-group>
@@ -50,10 +54,6 @@
 
     padding: 1.5rem;
 
-    .data {
-
-    }
-
     .avatar {
       border-radius: 100%;
       overflow: hidden;
@@ -61,29 +61,14 @@
       box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.15);
       background: #fff;
 
-      height: 54px;
-      width: 54px;
-
-      @media (max-width: $small-breakpoint) {
-        height: 42px;
-        width: 42px;
-      }
+      height: 48px;
+      width: 48px;
     }
 
     .skeleton-image {
       background: #eee;
       height: 100%;
       width: 100%;
-    }
-
-    @media (max-width: $small-breakpoint) {
-      .name {
-        font-size: 1rem !important;
-      }
-
-      .points {
-        font-size: 0.8rem;
-      }
     }
   }
 </style>

@@ -118,3 +118,12 @@ Route.group('admin.questions', () => {
 
 }).prefix('admin/questions')
   .middleware('auth:account')
+
+Route.group('admin.ranking', () => {
+
+  Route
+    .get('/', 'Admin/RankingController.index')
+    .as('admin.ranking')
+
+}).prefix('admin/ranking')
+  .middleware('auth:account')

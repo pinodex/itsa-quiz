@@ -47,9 +47,26 @@ class User extends Lucid {
       .orderBy('score', 'DESC')
       .orderBy('correct_count', 'DESC')
       .orderBy('incorrect_count', 'ASC')
+      .orderBy('created_at', 'ASC')
+      .limit(n)
       .fetch()
 
     return user
+  }
+
+  * getRank () {
+    let tops = yield User.top(1000),
+        rank = 0
+
+    tops.each(top => {
+      rank++
+
+      if (this.id == top.id) {
+        return false
+      }
+    })
+
+    return rank
   }
 
 }
