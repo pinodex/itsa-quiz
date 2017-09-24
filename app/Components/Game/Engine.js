@@ -3,13 +3,16 @@ const shuffle = require('knuth-shuffle').knuthShuffle,
       Question = use('App/Components/Game/Question'),
       Answer = use('App/Model/Answer')
 
+const GAME_STATE = 'GAME_STATE'
+
 class Engine {
 
-  constructor (event, tick = 500) {
+  constructor (event, env, tick = 500) {
     this.sky = new Sky()
     this.question = new Question()
 
     this.event = event
+    this.env = env
     this.tick = tick
 
     this.interval = null
@@ -34,6 +37,26 @@ class Engine {
     output.expiry = 5 * difficulty
 
     return output
+  }
+
+  getGameState () {
+    return this.env.get(GAME_STATE)
+  }
+
+  close () {
+    this.env.set(GAME_STATE, 'close')
+
+    this.event.fire('game:state:close')
+  }
+
+  open () {
+    this.env.set(GAME_STATE, 'open')
+
+    this.event.fire('game:state:open')
+  }
+
+  isOpen () {
+    return this.env.get(GAME_STATE) == 'open'
   }
 
   * answer (user, question_id, choice_id) {

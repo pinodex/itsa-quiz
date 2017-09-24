@@ -9,8 +9,29 @@
       :selected="cloud.selected"
 
       @click="getQuestion(cloud.id)" />
+
+      <transition name="fade">
+        <div class="closed" v-show="state == 'close'">
+          <p>Game Closed</p>
+        </div>
+      </transition>
   </section>
 </template>
+
+<style lang="scss">
+  .canvas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .closed {
+    p {
+      font-size: 2rem;
+      color: #fff;
+    }
+  }
+</style>
 
 <script>
   import Cloud from './Cloud'
@@ -23,7 +44,8 @@
 
     data () {
       return {
-        clouds: []
+        clouds: [],
+        state: null
       }
     },
 
@@ -54,10 +76,6 @@
         this.$snackbar.open('Reconnecting...')
       })
 
-      this.client.on('connect', () => {
-        this.$snackbar.open('Connected')
-      })
-
       this.client.on('cloud:spawn', cloud => {
         this.spawnCloud(cloud)
       })
@@ -70,6 +88,16 @@
         this._showQuestion(question, choice => {
           this._sendAnswer(question, choice)
         })
+      })
+
+      this.client.on('state:close', () => {
+        // Pop all the clouds!
+        this.clouds = []
+        this.state = 'close'
+      })
+
+      this.client.on('state:open', () => {
+        this.state = 'open'
       })
 
       const loop = () => {
@@ -98,6 +126,9 @@
       this.client.off('cloud:spawn')
       this.client.off('cloud:pop')
       this.client.off('question')
+
+      this.client.off('state:close')
+      this.client.off('state:open')
 
       this.client.disconnect()
 

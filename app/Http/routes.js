@@ -40,6 +40,15 @@ Route.group('api.quiz', function () {
 }).prefix('api/quiz')
   .middleware('auth:user')
 
+Route.group('api.admin', function () {
+
+  Route.get('open', 'Api/AdminController.open')
+
+  Route.post('open', 'Api/AdminController.open')
+
+}).prefix('api/admin')
+  .middleware('auth:account')
+
 /**
  * Admin routes
  */

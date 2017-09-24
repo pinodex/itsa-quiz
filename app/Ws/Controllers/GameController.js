@@ -10,13 +10,37 @@ class GameController {
     this.socket = socket
     this.request = request
 
+    switch (Engine.isOpen()) {
+      case true:
+        this.socket.toMe().emit('state:open')
+        break
+
+      case false:
+        this.socket.toMe().emit('state:close')
+        break
+    }
+
     Event.when('game:cloud:spawn', this.socket.id, cloud => {
+      if (!Engine.isOpen()) {
+        return
+      }
+
       this.socket.toMe().emit('cloud:spawn', cloud)
+    })
+
+    Event.when('game:state:open', this.socket.id, () => {
+      this.socket.toMe().emit('state:open')
+    })
+
+    Event.when('game:state:close', this.socket.id, () => {
+      this.socket.toMe().emit('state:close')
     })
   }
 
   onDisconnect () {
     Event.removeListener('game:cloud:spawn', this.socket.id)
+    Event.removeListener('game:state:close', this.socket.id)
+    Event.removeListener('game:state:open', this.socket.id)
   }
 
   onCloudPop (cloud) {
@@ -29,6 +53,10 @@ class GameController {
 
       return question
     }).then(question => {
+      if (!Engine.isOpen()) {
+        return
+      }
+
       this.socket.toMe().emit('question', question)
 
       this.socket.toMe().emit('cloud:pop', cloud.id)
@@ -36,6 +64,10 @@ class GameController {
   }
 
   onQuestionAnswer (data) {
+    if (!Engine.isOpen()) {
+      return
+    }
+
     if (!('question' in data) || !('choice' in data)) {
       return
     }

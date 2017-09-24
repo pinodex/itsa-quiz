@@ -17,26 +17,28 @@
         </div>
       </div>
     </div>
-
-    <div class="container">
-      {% for user in users.toJSON() %}
-        <article class="media is-vcentered">
-          <figure class="media-left is-48x48 image avatar">
-            <img src="{{ '//graph.facebook.com/' + user.fbid + '/picture?height=48&amp;width=48' }}" />
-          </figure>
-
-          <div class="media-content">
-            <div class="content">
-              <p class=" name is-marginless">{{ user.name }}</p>
-              <p class="points is-size-7">{{ user.score }} / {{ user.correct_count }} / {{ user.incorrect_count }}</p>
-            </div>
-          </div>
-
-          <div class="media-right">
-            <h2 class="subtitle has-text-grey-light">#{{ loop.index }}</h2>
-          </div>
-        </article>
-      {% endfor %}
-    </div>
   </section>
+
+  <div class="container">
+    <p class="has-contents-below"></p>
+
+    {% for user in users.toJSON() %}
+      <article class="media is-vcentered">
+        <figure class="media-left is-48x48 image avatar">
+          <img src="{{ '//graph.facebook.com/' + user.fbid + '/picture?height=48&amp;width=48' }}" />
+        </figure>
+
+        <div class="media-content">
+          <div class="content">
+            <p class=" name is-marginless">{{ user.name }}</p>
+            <p class="points is-size-7">{{ user.score }} / {{ user.correct_count }} / {{ user.incorrect_count }}</p>
+          </div>
+        </div>
+
+        <div class="media-right">
+          <h2 class="subtitle has-text-grey-light">#{{ loop.index }}</h2>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
 {% endblock %}
