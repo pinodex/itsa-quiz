@@ -46,6 +46,18 @@
     mounted () {
       setTimeout(() => this.$root.setThemeColor('#d39144'), 500)
 
+      this.client.on('disconnect', () => {
+        this.$snackbar.open('Disconnected')
+      })
+
+      this.client.on('reconnect', () => {
+        this.$snackbar.open('Reconnecting...')
+      })
+
+      this.client.on('connect', () => {
+        this.$snackbar.open('Connected')
+      })
+
       this.client.on('cloud:spawn', cloud => {
         this.spawnCloud(cloud)
       })
@@ -79,6 +91,10 @@
     },
 
     beforeDestroy () {
+      this.client.off('disconnect')
+      this.client.off('reconnect')
+      this.client.off('connect')
+
       this.client.off('cloud:spawn')
       this.client.off('cloud:pop')
       this.client.off('question')
@@ -107,6 +123,16 @@
         const index = this._findCloudIndex(id)
 
         this.clouds[index].selected = true
+
+        setTimeout(() => {
+          let missedCloudIndex = this._findCloudIndex(id)
+
+          if (missedCloudIndex != -1) {
+            this.clouds[missedCloudIndex].selected = false
+
+            this.$toast.open('Please check your internet connection')
+          }
+        }, 3000)
 
         return this.clouds[index]
       },
