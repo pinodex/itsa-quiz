@@ -13,6 +13,8 @@
 */
 
 const Account = use('App/Model/Account'),
+      Question = use('App/Model/Question'),
+      Choice = use('App/Model/Choice'),
       Hash = use('Hash')
 
 class DatabaseSeeder {
@@ -24,6 +26,23 @@ class DatabaseSeeder {
       name: 'Admin',
       username: 'admin',
       password
+    })
+
+    let question = yield Question.create({
+      text: 'This is a sample question',
+      difficulty: 1
+    })
+
+    yield Choice.create({
+      question_id: question.id,
+      text: 'This is correct answer',
+      is_answer: 1
+    })
+
+    yield Choice.create({
+      question_id: question.id,
+      text: 'This is wrong answer',
+      is_answer: 0
     })
   }
 
