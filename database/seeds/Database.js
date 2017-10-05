@@ -12,12 +12,19 @@
 |
 */
 
-// const Factory = use('Factory')
+const Account = use('App/Model/Account'),
+      Hash = use('Hash')
 
 class DatabaseSeeder {
 
   * run () {
-    // yield Factory.model('App/Model/User').create(5)
+    let password = yield Hash.make('admin')
+
+    yield Account.create({
+      name: 'Admin',
+      username: 'admin',
+      password
+    })
   }
 
 }
